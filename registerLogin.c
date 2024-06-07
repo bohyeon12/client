@@ -1,75 +1,78 @@
 #include "registerLogin.h"
-#include "mysql_operation.h"
 #include <stdio.h>
 #include <string.h>
-
+#include"client.h"
 #define LIMIT 5
 
 void createAccount() {
-    char id[50];
-    char pw[50];
-    char pwCheck[50];
-    char name[100];
+    char id[20];
+    char pw[20];
+    char pwCheck[20];
+    char name[10];
     int age;
 
-    // MySQL 연결 초기화
-    MYSQL* conn = init_mysql_connection(server, user, password, database);
-    if (conn == NULL) {
-        return;
-    }
+    initiatesocket();
 
     printf("이름을 입력하세요: ");
-    scanf("%99s", name);
+    scanf_s("%s", name,10);
     printf("나이를 입력하세요: ");
-    scanf("%d", &age);
+    scanf_s("%d", &age);
     printf("ID 입력: ");
-    scanf("%49s", id);
+    scanf_s("%s", id,20);
 
     while (1) {
         printf("비밀번호 입력 (전체 패스워드 길이는 8자 이상, 특수문자, 대소문자, 숫자 포함): ");
-        scanf("%49s", pw);
+        scanf_s("%s", pw,20);
         printf("비밀번호 확인: ");
-        scanf("%49s", pwCheck);
-        if (strcmp(pw, pwCheck) != 0) {
+        scanf_s("%s", pwCheck,20);
+
+        char message[75];
+        sprintf_s(message,75 , "MJ:%s,%s,%s,%d", id, pw, name, age);
+        char buff[25];
+        char* args[2];
+        sendandwait(message,buff,args);
+
+        if (args[1][0] != 0) {
             printf("비밀번호가 일치하지 않습니다. 다시 입력하세요.\n");
         }
         else {
             printf("사용자 계정의 생성이 완료되었습니다.\n");
-
-            // 사용자 데이터를 데이터베이스에 삽입하는 함수를 사용
-            if (insert_user_data(conn, name, age, id, pw) == 0) {
-                printf("사용자 정보가 데이터베이스에 저장되었습니다.\n");
-            }
-            break;
+            WSACleanup();
+            closesocket(nSocket);
+            nSocket = NULL;
+            return;
         }
     }
-    close_mysql_connection(conn);
 }
 
-void login() {
+char* login() {
     int count = 0;
-    char id[50];
-    char pw[50];
-
-    // MySQL 연결 초기화
-    MYSQL* conn = init_mysql_connection(server, user, password, database);
-    if (conn == NULL) {
-        return;
-    }
-
+    char id[20];
+    char pw[20];
+    initiatesocket();
     while (count < LIMIT) {
         printf("아이디를 입력하세요: ");
-        scanf("%49s", id);
+        scanf_s("%s", id,20);
         printf("비밀번호를 입력하세요: ");
-        scanf("%49s", pw);
-        if (check_user_credentials(conn, id, pw)) {
+        scanf_s("%s", pw,20);
+
+        char message[45];
+        sprintf_s(message, 45, "MJ:%s,%s", id, pw);
+        char buff[25];
+        char* args[2];
+        sendandwait(message, buff, args);
+
+        if (args[1][0] == '0') {
             printf("로그인되었습니다.\n");
-            break;
+            return args[0];
         }
         else {
             printf("비밀번호가 틀렸습니다. 다시 시도하세요.\n");
         }
         count++;
     }
-    close_mysql_connection(conn);
+    WSACleanup();
+    closesocket(nSocket);
+    nSocket = NULL;
+    return NULL;
 }

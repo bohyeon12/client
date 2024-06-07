@@ -1,35 +1,12 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include "mainspace.h"
-#include "mysql_operation.h"
 #include "registerLogin.h"
 
 // 메인 메뉴 함수
 void mainspace() {
     int selectNumber = 0;
     while (1) {
-        printf("1. 계좌 정보 입력\n");
-        printf("2. 계좌 조회\n");
-        printf("3. 계좌 정보 삭제\n");
-        printf("4. 로그아웃\n");
-        printf("원하시는 서비스의 번호를 입력하세요: ");
-        scanf("%d", &selectNumber);
-
-        switch (selectNumber) {
-        case 1:
-            inputAccount();
-            break;
-        case 2:
-            viewAccount();
-            break;
-        case 3:
-            deleteAccount();
-            break;
-        case 4:
-            printf("로그아웃 되었습니다.\n");
-            return;
-        default:
-            printf("잘못된 선택입니다. 다시 시도하세요.\n");
-        }
+        
     }
 }
 
@@ -146,4 +123,4 @@ void deleteAccount() {
     }
 
     close_mysql_connection(conn);
-}
+}*/
