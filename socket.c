@@ -1,6 +1,6 @@
-#include"client.h"
+#include"socket.h"
 
-int initiatesocket() {
+int initiatesocket(void) {
     int nRet = 0;
     WSADATA ws;
 
@@ -8,7 +8,7 @@ int initiatesocket() {
     if ((nRet = WSAStartup(MAKEWORD(2, 2), &ws)) != 0) {
         printf("WSA failed to initialize: %d\n", nRet);
         ENDSERVER
-        return 1;
+            return 1;
     }
     printf("WSA initialized successfully\n");
 
@@ -17,7 +17,7 @@ int initiatesocket() {
     if (nSocket == INVALID_SOCKET) {
         printf("The socket not opened, error: %d\n", WSAGetLastError());
         ENDSERVER
-        return 1;
+            return 1;
     }
     printf("The socket opened successfully\n");
 
@@ -29,7 +29,7 @@ int initiatesocket() {
     if (inet_pton(AF_INET, "127.0.0.1", &srv.sin_addr) <= 0) {
         printf("Invalid address/ Address not supported\n");
         closesocket(nSocket);
-        
+
         return 1;
     }
     memset(&(srv.sin_zero), 0, 8);
@@ -40,7 +40,7 @@ int initiatesocket() {
         printf("Failed to connect to the server, error: %d\n", WSAGetLastError());
         closesocket(nSocket);
         ENDSERVER
-        return 1;
+            return 1;
     }
     printf("Successfully connected to the server\n");
 
@@ -76,5 +76,6 @@ void sendandwait(char* message, char* buff, char** args) {
     send(nSocket, message, strlen(message), 0);
     Sleep(2000);
     recv(nSocket, buff, sizeof(buff), 0);
-    readbuff(buff + 3, args,sizeof(args)/sizeof(char*));
+    printf("%s\n", buff);
+    readbuff(buff + 3, args, sizeof(args) / sizeof(char*));
 }

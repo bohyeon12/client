@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "registerLogin.h"
 //#include "mainspace.h"
-#include "client.h"
+#include "socket.h"
 
 
 int main() {
@@ -12,11 +12,11 @@ int main() {
             scanf_s("%d", &menuNum);
             if (menuNum == 1) {
                 user = login();
-                break;
+                
             }
             else if (menuNum == 2) {
                 createAccount();
-                break;
+                
             }
             else {
                 printf("잘못된 입력입니다. 다시 시도하세요.\n");

@@ -1,8 +1,7 @@
 #include "registerLogin.h"
-#include <stdio.h>
-#include <string.h>
-#include"client.h"
+#include "socket.h"
 #define LIMIT 5
+
 
 void createAccount() {
     char id[20];
@@ -24,23 +23,32 @@ void createAccount() {
         printf("비밀번호 입력 (전체 패스워드 길이는 8자 이상, 특수문자, 대소문자, 숫자 포함): ");
         scanf_s("%s", pw,20);
         printf("비밀번호 확인: ");
-        scanf_s("%s", pwCheck,20);
-
-        char message[75];
-        sprintf_s(message,75 , "MJ:%s,%s,%s,%d", id, pw, name, age);
-        char buff[25];
-        char* args[2];
-        sendandwait(message,buff,args);
-
-        if (args[1][0] != 0) {
+        scanf_s("%s", pwCheck, 20);
+        
+        if (strcmp(pw,pwCheck) != 0) {
             printf("비밀번호가 일치하지 않습니다. 다시 입력하세요.\n");
         }
         else {
-            printf("사용자 계정의 생성이 완료되었습니다.\n");
-            WSACleanup();
-            closesocket(nSocket);
-            nSocket = NULL;
-            return;
+            char message[75];
+            sprintf_s(message, 75, "MJ:%s,%s,%s,%d", id, pw, name, age);
+            printf("%s\n", message);
+            char buff[5] = { 0 };
+            send(nSocket, message, strlen(message), 0);
+            Sleep(3000);
+            recv(nSocket, buff, sizeof(buff), 0);
+            
+            printf("%s\n", buff);
+            
+            if (buff[3] != '0') {
+                printf("이미 가입된 사용자입니다.\n");
+                ENDSERVER;
+                return;
+            }
+            else {
+                printf("사용자 계정의 생성이 완료되었습니다.\n");
+                ENDSERVER;
+                return;
+            }
         }
     }
 }
@@ -57,7 +65,7 @@ char* login() {
         scanf_s("%s", pw,20);
 
         char message[45];
-        sprintf_s(message, 45, "MJ:%s,%s", id, pw);
+        sprintf_s(message, 45, "LI:%s,%s", id, pw);
         char buff[25];
         char* args[2];
         sendandwait(message, buff, args);

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef REGISTER_LOGIN_H
 #define REGISTER_LOGIN_H
 
