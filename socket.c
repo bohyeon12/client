@@ -48,34 +48,24 @@ int initiatesocket(void) {
 }
 
 void readbuff(char* buff, char** args, int maxArgs) {
-    int start = 0, end = 0, i = 0;
-
-    while (buff[end] != '\0') {
-        if (buff[end] == ',') {
-            buff[end] = '\0';  // Null-terminate the current token
-            if (i < maxArgs) {
-                args[i++] = buff + start;
-            }
-            start = end + 1;
+    char* cursor;
+    cursor = buff;
+    args[0] = cursor;
+    int i = 1;
+    while (i < maxArgs || *cursor == '\0') {
+        if (*cursor == ',') {
+            *cursor = '\0';
+            args[i++] = cursor+1;
         }
-        end++;
-    }
-
-    // Add the last token
-    if (i < maxArgs) {
-        args[i++] = buff + start;
-    }
-
-    // Ensure the remaining pointers in args are NULL
-    while (i < maxArgs) {
-        args[i++] = NULL;
+        cursor++;
     }
 }
 
-void sendandwait(char* message, char* buff, char** args) {
+void sendandwait(char* message, char buff[], char** args,int buffsize, int argssize) {
     send(nSocket, message, strlen(message), 0);
-    Sleep(2000);
-    recv(nSocket, buff, sizeof(buff), 0);
+    Sleep(500);
+    recv(nSocket, buff, buffsize, 0);
     printf("%s\n", buff);
-    readbuff(buff + 3, args, sizeof(args) / sizeof(char*));
+    readbuff(buff + 3, args, argssize);
 }
+

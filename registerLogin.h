@@ -2,6 +2,6 @@
 #define REGISTER_LOGIN_H
 
 void createAccount();
-char* login();
+void login();
 
 #endif // REGISTER_LOGIN_H

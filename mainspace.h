@@ -3,9 +3,9 @@
 #define MAINSPACE_H
 #define LIMIT 5
 
-void mainspace();
 void inputAccount();
 void viewAccount();
 void deleteAccount();
-
+void getpercentile();
+void logout();
 #endif // MAINSPACE_H

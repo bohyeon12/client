@@ -11,11 +11,9 @@
 
 int initiatesocket(void);
 void readbuff(char* cursor, char** args, int maxArgs);
-void sendandwait(char* message, char* buff, char** args);
-
+void sendandwait(char* message, char* buff, char** args, int buffsize, int argssize);
 struct sockaddr_in srv;
 static int nSocket;
-static char* user;
-
+extern char* user;
 
 #endif
