@@ -1,4 +1,4 @@
-#include "registerLogin.h"
+癤�#include "registerLogin.h"
 #include "socket.h"
 #define LIMIT 5
 
@@ -12,21 +12,21 @@ void createAccount() {
 
     initiatesocket();
 
-    printf("이름을 입력하세요: ");
+    printf("Put your name: ");
     scanf_s("%s", name,10);
-    printf("나이를 입력하세요: ");
+    printf("Put your age: ");
     scanf_s("%d", &age);
-    printf("ID 입력: ");
+    printf("Put your ID: ");
     scanf_s("%s", id,20);
 
     while (1) {
-        printf("비밀번호 입력 (전체 패스워드 길이는 8자 이상, 특수문자, 대소문자, 숫자 포함): ");
+        printf("Put your password : ");
         scanf_s("%s", pw,20);
-        printf("비밀번호 확인: ");
+        printf("Put your password again: ");
         scanf_s("%s", pwCheck, 20);
         
         if (strcmp(pw,pwCheck) != 0) {
-            printf("비밀번호가 일치하지 않습니다. 다시 입력하세요.\n");
+            printf("Your password is not assured. Try again\n");
         }
         else {
             char message[75];
@@ -36,12 +36,12 @@ void createAccount() {
             sendandwait(message, buff, args, sizeof(buff), sizeof(args) / sizeof(char*));
 
             if(args[0][0] == '-'){
-                printf("이미 가입된 사용자입니다.\n");
+                printf("This ID already exist.\n");
                 ENDSERVER;
                 return;
             }
             else {
-                printf("사용자 계정의 생성이 완료되었습니다.\n");
+                printf("Sign up completed\n");
                 ENDSERVER;
                 return;
             }
@@ -55,9 +55,9 @@ void login() {
     char pw[20];
     initiatesocket();
     while (count < LIMIT) {
-        printf("아이디를 입력하세요: ");
+        printf("Put your name : ");
         scanf_s("%s", id,20);
-        printf("비밀번호를 입력하세요: ");
+        printf("Put your password : ");
         scanf_s("%s", pw,20);
 
         char message[45];
@@ -74,7 +74,7 @@ void login() {
             return ;
         }
         else {
-            printf("비밀번호가 틀렸습니다. 다시 시도하세요.\n");
+            printf("Wrong password. Try again. \n");
         }
         count++;
     }

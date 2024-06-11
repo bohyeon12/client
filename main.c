@@ -5,10 +5,11 @@
 
 char* user = NULL;
 int main() {
+
     int menuNum = 0;
     while (1) {
         if (user == NULL) {
-            printf("1: 로그인   2: 회원가입 3. 종료\n");
+            printf("1: Login   2: Sign up 3. Exit\n");
             scanf_s("%d", &menuNum);
             if (menuNum == 1) {
                 login();            }
@@ -16,20 +17,19 @@ int main() {
                 createAccount();
             }
             else if (menuNum == 3) {
-                printf("프로그램이 종료됩니다.\n");
                 exit(0);
             }
             else {
-                printf("잘못된 입력입니다. 다시 시도하세요.\n");
+                printf("Wrong input. Try again\n");
             }
         }
         else {
-            printf("1. 계좌 정보 입력\n");
-            printf("2. 계좌 조회\n");
-            printf("3. 계좌 정보 삭제\n");
-            printf("4. 연령대 대비 자산 백분위 구하기\n");
-            printf("5. 로그아웃\n");
-            printf("원하시는 서비스의 번호를 입력하세요: ");
+            printf("1. Input account informations\n");
+            printf("2. View account\n");
+            printf("3. Delete account\n");
+            printf("4. Get percentile of your asset to same age group\n");
+            printf("5. Log out\n");
+            printf("Put a service number you want: ");
             scanf_s("%d", &menuNum);
 
             switch (menuNum) {
@@ -49,7 +49,7 @@ int main() {
                 logout();
                 break;
             default:
-                printf("잘못된 선택입니다. 다시 시도하세요.\n");
+                printf("Wrong input. Try again\n");
             }
         }
         

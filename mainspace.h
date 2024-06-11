@@ -8,4 +8,5 @@ void viewAccount();
 void deleteAccount();
 void getpercentile();
 void logout();
+double manufactdeal_bas_r(char*);
 #endif // MAINSPACE_H
