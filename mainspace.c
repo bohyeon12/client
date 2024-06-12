@@ -64,8 +64,8 @@ void viewAccount() {
     json = getexchangerate();
     cJSON_ArrayForEach(item, json) {
         cur_unit[i] = cJSON_GetObjectItem(item, "cur_unit")->valuestring;
-        deal_bas_rs[i] = manufactdeal_bas_r(cJSON_GetObjectItem(item, "deal_bas_r")->valuestring);
-        printf("cur uint : %s | deal_bas_rs : %f\n", cur_unit[i], deal_bas_rs[i]);
+        char* exr = cJSON_GetObjectItem(item, "deal_bas_r")->valuestring;
+        deal_bas_rs[i] = manufactdeal_bas_r(exr);
         i++;
     }
     
@@ -88,7 +88,7 @@ void viewAccount() {
                 copy[i] = buff[i];
             }
             long sum = 0;
-            printf("%s's account information\nAccount number\tBank\tDeposit\t*currency : %s\n", args[0], currency);
+            printf("%s's account information\nAccount number\tBank\tDeposit\t*currency : %s\texchange rate : %.0f\n", args[0], currency, exchangerate);
             char* cursor1, * cursor2;
             cursor1 = copy+(args[1]-args[0]) + 3;
             cursor2 = cursor1 + 1;
@@ -129,7 +129,6 @@ void viewAccount() {
                      }
                      exchangerate = deal_bas_rs[menuNum-1];
                      currency = cur_unit[menuNum-1];
-                     printf("exchange : %f\n", exchangerate);
                  }
                  else {
                      printf("Wrong input. Try again\n");
@@ -223,9 +222,9 @@ double manufactdeal_bas_r(char* deal_bas_r) {
     char* cursor2 = deal_bas_r + 1;
     while (*(cursor2)) {
         if (*(cursor2) == ',') {
-            *cursor1 = *(++cursor2);
-            *cursor2 = ' ';
+            cursor2++;
         }
+        *cursor1 = *cursor2;
         cursor1++; cursor2++;
     }
     *cursor1 = '\0';

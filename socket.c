@@ -65,7 +65,6 @@ void sendandwait(char* message, char buff[], char** args,int buffsize, int argss
     send(nSocket, message, strlen(message), 0);
     Sleep(500);
     recv(nSocket, buff, buffsize, 0);
-    printf("%s\n", buff);
     readbuff(buff + 3, args, argssize);
 }
 
