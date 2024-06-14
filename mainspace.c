@@ -10,7 +10,7 @@ void inputAccount() {
     char bankNumber[11];
     char bankBalance[15];
     int count = 0;
-   
+    printf("------------------------------------------------------\n");
     printf("Put your bank : ");
     scanf_s("%s", bankName,20);
     printf("Put your account number : ");
@@ -47,6 +47,7 @@ void inputAccount() {
 
 // 계좌 정보를 조회하는 함수
 void viewAccount() {
+    printf("------------------------------------------------------\n");
     char message[25] = { 0, };
     sprintf_s(message, 25, "AC:%s", user);
     char buff[500] = { 0 };
@@ -70,7 +71,7 @@ void viewAccount() {
     }
     
     if(args[1][0] == '\0') {
-       printf("That account doesn't exist.\n");
+       printf("Account info doesn't exist.\n");
        return;
     }
     else if (args[1][0] == '-') {
@@ -150,6 +151,7 @@ void deleteAccount() {
     char bankNumber[11];
     char bankName[20];
     char pw[20];
+    printf("------------------------------------------------------\n");
     printf("Put the account number : ");
     scanf_s("%s", bankNumber,11);
     printf("Put the bank : ");
@@ -205,6 +207,7 @@ void getpercentile() {
 }
 
 void logout() {
+    printf("------------------------------------------------------\n");
     ENDSERVER;
     extern char* user;
     user = NULL;

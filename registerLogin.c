@@ -11,7 +11,7 @@ void createAccount() {
     int age;
 
     initiatesocket();
-
+    printf("------------------------------------------------------\n");
     printf("Put your name: ");
     scanf_s("%s", name,10);
     printf("Put your age: ");
@@ -35,12 +35,12 @@ void createAccount() {
             char* args[1] = { NULL };
             sendandwait(message, buff, args, sizeof(buff), sizeof(args) / sizeof(char*));
 
-            if(args[0][0] == '-'){
+            if(args[0][0] == '1'){
                 printf("This ID already exist.\n");
                 ENDSERVER;
                 return;
             }
-            else {
+            else if(args[0][0] == '0'){
                 printf("Sign up completed\n");
                 ENDSERVER;
                 return;
@@ -50,12 +50,13 @@ void createAccount() {
 }
 
 void login() {
+    printf("------------------------------------------------------\n");
     int count = 0;
     char id[20];
     char pw[20];
     initiatesocket();
     while (count < LIMIT) {
-        printf("Put your name : ");
+        printf("Put your ID : ");
         scanf_s("%s", id,20);
         printf("Put your password : ");
         scanf_s("%s", pw,20);
@@ -65,7 +66,6 @@ void login() {
         char buff[25] = {0,};
         char* args[2] = { NULL,NULL };
         sendandwait(message, buff, args, sizeof(buff), sizeof(args)/sizeof(char*));
-        printf("%s,%s\n", args[0], args[1]);
 
         if (args[1][0] == '0') {
             extern char* user;

@@ -52,7 +52,7 @@ void readbuff(char* buff, char** args, int maxArgs) {
     cursor = buff;
     args[0] = cursor;
     int i = 1;
-    while (i < maxArgs || *cursor == '\0') {
+    while (i < maxArgs) {
         if (*cursor == ',') {
             *cursor = '\0';
             args[i++] = cursor+1;

@@ -9,6 +9,7 @@ int main() {
     int menuNum = 0;
     while (1) {
         if (user == NULL) {
+            printf("------------------------------------------------------\n");
             printf("1: Login   2: Sign up 3. Exit\n");
             scanf_s("%d", &menuNum);
             if (menuNum == 1) {
@@ -24,6 +25,7 @@ int main() {
             }
         }
         else {
+            printf("------------------------------------------------------\n");
             printf("1. Input account informations\n");
             printf("2. View account\n");
             printf("3. Delete account\n");
